@@ -132,10 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const shareData = btoa(JSON.stringify(cardData));
             const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encodeURIComponent(shareData)}`;
 
-            // Generate QR code for sharing
-            const qrCodeData = generateVCard(cardData);
-
-            // Generate vCard data for contact saving
+            // Generate vCard data for both QR code and contact saving
             const vCardData = generateVCard(cardData);
 
             // Try Web Share API first (works on iOS 12.2+ and Android)
@@ -149,13 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Share successful');
                 } catch (error) {
                     console.error('Web Share API error:', error);
-                    // If user cancels or error occurs, show copy option
+                    // If user cancels or error occurs, show copy option with both links
                     if (error.name !== 'AbortError') {
                         showCopyOption(shareUrl, vCardData);
                     }
                 }
             } else {
-                // Fallback for browsers without Web Share API
+                // Fallback for browsers without Web Share API - show both links
                 showCopyOption(shareUrl, vCardData);
             }
         });
