@@ -1,572 +1,4 @@
-   RESPONSIVE
-============================== */
-@media (max-width: 1050px) {
-    .app-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .form-panel {
-        max-width: 700px;
-        width: 100%;
-    }
-
-    .card {
-        width: 620px;
-        height: 340px;
-    }
-
-    .official-logo {
-        max-width: 180px;
-    }
-}
-
-@media (max-width: 650px) {
-    .card {
-        width: 95vw;
-        height: auto;
-        aspect-ratio: 700 / 380;
-    }
-
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .person-info h1 {
-        font-size: 20px;
-    }
-
-    .contact-row span {
-        font-size: 11px;
-    }
-
-    .address-block p {
-        font-size: 10px;
-    }
-
-    .qr-section, .share-section {
-        width: 95vw;
-    }
-
-    .app-container {
-        padding: 0 15px;
-        margin: 20px auto;
-        gap: 30px;
-    }
-
-    .form-panel {
-        padding: 24px;
-    }
-
-    .form-header h2 {
-        font-size: 20px;
-    }
-}
-
-/* Mobile-specific adjustments - COMPLETE REDESIGN */
-@media (max-width: 480px) {
-    /* Card container - make it more compact and better proportioned */
-    .card {
-        height: auto;
-        min-height: 320px;
-        border-radius: 12px;
-        overflow: hidden;
-        position: relative;
-    }
-
-    /* Hide the complex SVG background on mobile and use solid colors */
-    .card-bg-svg {
-        display: none;
-    }
-
-    /* Card content layer - better layout */
-    .card-content-layer {
-        flex-direction: column;
-    }
-
-    /* Card left - now full width on top with solid teal background */
-    .card-left {
-        width: 100%!important;
-        padding: 20px 18px 15px 18px;
-        background: #0d7068;
-        position: relative;
-        z-index: 3;
-    }
-
-    /* Card right - now full width on bottom with white background */
-    .card-right {
-        width: 100%!important;
-        height: 120px;
-        padding: 15px;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* Logo - better sizing and positioning */
-    .official-logo {
-        max-width: 160px;
-        max-height: 100px;
-        object-fit: contain;
-        margin: 0 auto;
-        display: block;
-    }
-
-    /* Person info - better typography */
-    .person-info {
-        border-left: none;
-        padding-left: 0;
-        margin-bottom: 12px;
-    }
-
-    .person-info h1 {
-        font-size: 20px;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 4px;
-        letter-spacing: 0.5px;
-    }
-
-    .person-info h2 {
-        font-size: 14px;
-        font-weight: 500;
-        color: #e0f2f1;
-        letter-spacing: 0.3px;
-    }
-
-    /* Contact details - better spacing and readability */
-    .contact-details {
-        gap: 10px;
-    }
-
-    .contact-row {
-        gap: 10px;
-    }
-
-    .contact-icon {
-        width: 22px;
-        height: 22px;
-        font-size: 10px;
-    }
-
-    .contact-row span {
-        font-size: 13px;
-        color: white;
-        line-height: 1.4;
-        font-weight: 500;
-    }
-
-    .address-block p {
-        font-size: 12px;
-        color: #e0f2f1;
-        line-height: 1.4;
-        margin-bottom: 6px;
-    }
-
-    /* Hide JSON block on mobile to save space */
-    .json-block {
-        display: none;
-    }
-
-    /* Make form more compact on mobile */
-    .form-panel {
-        padding: 20px;
-    }
-
-    .form-header h2 {
-        font-size: 18px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        padding: 9px 12px;
-        font-size: 13px;
-    }
-
-    /* Better share button */
-    .share-btn {
-        padding: 12px 20px;
-        font-size: 15px;
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Fix QR section width */
-    .qr-section, .share-section {
-        width: 100%;
-    }
-
-    /* Better card wrapper */
-    .card-wrapper {
-        width: 100%;
-    }
-}
-
-/* Extra small devices */
-@media (max-width: 360px) {
-    /* Card container - even more compact */
-    .card {
-        min-height: 300px;
-    }
-
-    /* Card left - full width */
-    .card-left {
-        width: 100%!important;
-        padding: 18px 16px 12px 16px;
-    }
-
-    /* Card right - slightly shorter */
-    .card-right {
-        width: 100%!important;
-        height: 100px;
-    }
-
-    /* Logo - smaller */
-    .official-logo {
-        max-width: 140px;
-        max-height: 80px;
-    }
-
-    /* Person info - slightly smaller */
-    .person-info h1 {
-        font-size: 18px;
-    }
-
-    /* Contact details - smaller text */
-    .contact-row span {
-        font-size: 12px;
-    }
-
-    .address-block p {
-        font-size: 11px;
-    }
-
-    /* Adjust preview panel */
-    .preview-panel {
-        padding: 0 8px;
-    }
-}
-
-/* Landscape mobile devices (small screens in landscape mode) */
-@media (max-width: 768px) and (orientation: landscape) {
-    /* Apply mobile stacked layout to landscape mode too */
-    .card-bg-svg {
-        display: none;
-    }
-
-    .card-content-layer {
-        flex-direction: column;
-    }
-
-    .card-left {
-        width: 100%!important;
-        padding: 18px 16px 12px 16px;
-        background: #0d7068;
-    }
-
-    .card-right {
-        width: 100%!important;
-        height: 100px;
-        background: white;
-    }
-
-    .official-logo {
-        max-width: 160px;
-        max-height: 90px;
-    }
-
-    .person-info h1 {
-        font-size: 18px;
-    }
-
-    .contact-row span {
-        font-size: 13px;
-    }
-
-    .address-block p {
-        font-size: 12px;
-    }
-
-    /* Hide JSON on landscape mobile too */
-    .json-block {
-        display: none;
-    }
-
-    /* Make card responsive in landscape */
-    .card {
-        width: 90vw;
-        min-height: 280px;
-    }
-
-    /* Adjust form panel */
-    .form-panel {
-        padding: 18px;
-    }
-}
-
-/* Small landscape screens (like iPhone in landscape) */
-@media (max-width: 667px) and (orientation: landscape) {
-    .card {
-        width: 95vw;
-        min-height: 260px;
-    }
-
-    .card-left {
-        padding: 16px 14px 10px 14px;
-    }
-
-    .card-right {
-        height: 80px;
-    }
-
-    .official-logo {
-        max-width: 140px;
-        max-height: 70px;
-    }
-
-    .person-info h1 {
-        font-size: 16px;
-    }
-
-    .contact-row span {
-        font-size: 12px;
-    }
-}
-=======
 /* ==============================
-   SHARE BUTTON STYLES
-============================== */
-.share-section {
-    margin-top: 20px;
-    width: 700px;
-    display: flex;
-    justify-content: center;
-}
-
-.share-btn {
-    background: linear-gradient(135deg, #0d7068 0%, #5a9e1e 100%);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.share-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.share-btn:active {
-    transform: translateY(0);
-}
-
-.share-btn i {
-    font-size: 16px;
-}
-
-/* ==============================
-   RESPONSIVE
-============================== */
-@media (max-width: 1050px) {
-    .app-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .form-panel {
-        max-width: 700px;
-        width: 100%;
-    }
-
-    .card {
-        width: 620px;
-        height: 340px;
-    }
-
-    .official-logo {
-        max-width: 180px;
-    }
-
-    .share-section {
-        width: 620px;
-    }
-}
-
-@media (max-width: 650px) {
-    .card {
-        width: 95vw;
-        height: auto;
-        aspect-ratio: 700 / 380;
-    }
-
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .person-info h1 {
-        font-size: 20px;
-    }
-
-    .contact-row span {
-        font-size: 11px;
-    }
-
-    .address-block p {
-        font-size: 10px;
-    }
-
-    .qr-section, .share-section {
-        width: 95vw;
-    }
-
-    .app-container {
-        padding: 0 15px;
-        margin: 20px auto;
-        gap: 30px;
-    }
-
-    .form-panel {
-        padding: 24px;
-    }
-
-    .form-header h2 {
-        font-size: 20px;
-    }
-}
-
-/* Mobile-specific adjustments */
-@media (max-width: 480px) {
-    .card-left {
-        width: 60%;
-        padding: 20px 16px 16px 20px;
-    }
-
-    .card-right {
-        width: 40%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .official-logo {
-        max-width: 140px;
-        max-height: 180px;
-        object-fit: contain;
-        margin-left: 10px;
-    }
-
-    .person-info h1 {
-        font-size: 18px;
-        margin-bottom: 1px;
-    }
-
-    .person-info h2 {
-        font-size: 12px;
-    }
-
-    .contact-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 8px;
-    }
-
-    .contact-row span {
-        font-size: 11px;
-        line-height: 1.3;
-    }
-
-    .address-block p {
-        font-size: 10px;
-        line-height: 1.3;
-    }
-
-    .share-btn {
-        padding: 10px 20px;
-        font-size: 15px;
-    }
-
-    /* Hide JSON block on mobile to save space */
-    .json-block {
-        display: none;
-    }
-
-    /* Make card more compact */
-    .card {
-        height: auto;
-        min-height: 300px;
-    }
-
-    /* Adjust contact details spacing */
-    .contact-details {
-        gap: 10px;
-    }
-
-    /* Make form more compact on mobile */
-    .form-panel {
-        padding: 20px;
-    }
-
-    .form-header h2 {
-        font-size: 18px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        padding: 9px 12px;
-        font-size: 13px;
-    }
-}
-
-/* Extra small devices */
-@media (max-width: 360px) {
-    .card-left {
-        width: 65%;
-        padding: 16px 12px 12px 16px;
-    }
-
-    .card-right {
-        width: 35%;
-    }
-
-    .official-logo {
-        max-width: 120px;
-        max-height: 160px;
-        margin-left: 8px;
-    }
-
-    .person-info h1 {
-        font-size: 16px;
-    }
-
-    .contact-row span {
-        font-size: 10px;
-    }
-
-    .address-block p {
-        font-size: 9px;
-    }
-
-    /* Make card even more compact */
-    .card {
-        min-height: 280px;
-    }
-
-    /* Adjust preview panel */
-    .preview-panel {
-        padding: 0 10px;
-    }
-}==============================
    RESET & GLOBAL
 ============================== */
 *,
@@ -712,12 +144,10 @@ body {
 }
 
 @keyframes livePulse {
-
     0%,
     100% {
         opacity: 1;
     }
-
     50% {
         opacity: 0.4;
     }
@@ -753,7 +183,6 @@ body {
 }
 
 .card-wrapper {
-    /* subtle shadow box around the card */
     filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.18));
 }
 
@@ -880,11 +309,9 @@ body {
     max-width: 200px;
     max-height: 240px;
     object-fit: contain;
-    /* Better positioning */
     margin: 0 auto;
     display: block;
 }
-
 
 /* ==============================
    QR CODE SECTION
@@ -947,7 +374,156 @@ body {
 }
 
 /* ==============================
-   RESPONSIVE
+   SHARE BUTTON
+============================== */
+.share-section {
+    margin-top: 20px;
+    width: 700px;
+    display: flex;
+    justify-content: center;
+}
+
+.share-btn {
+    background: linear-gradient(135deg, #0d7068 0%, #5a9e1e 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.share-btn:active {
+    transform: translateY(0);
+}
+
+.share-btn i {
+    font-size: 16px;
+}
+
+/* ==============================
+   SHARE MODAL
+============================== */
+.share-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.share-dialog {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.share-dialog h3 {
+    margin-bottom: 16px;
+    color: #0d7068;
+}
+
+.share-dialog .share-subtitle {
+    margin-bottom: 12px;
+    color: #666;
+}
+
+.share-dialog .share-action {
+    display: block;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: white;
+    font-size: 15px;
+}
+
+.share-dialog .share-action-website {
+    background: #0d7068;
+}
+
+.share-dialog .share-action-contact {
+    background: #5a9e1e;
+}
+
+.share-dialog .share-action-hint {
+    font-size: 12px;
+    color: #888;
+    margin: -4px 0 12px;
+}
+
+.share-dialog .share-copy-section {
+    margin-top: 16px;
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+}
+
+.share-dialog .share-copy-section p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.share-dialog .share-copy-row {
+    display: flex;
+    gap: 8px;
+}
+
+.share-dialog .share-copy-row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    min-width: 0;
+}
+
+.share-dialog .share-copy-row button {
+    background: #0d7068;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.share-dialog .share-close-btn {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+/* ==============================
+   RESPONSIVE - TABLET
 ============================== */
 @media (max-width: 1050px) {
     .app-container {
@@ -968,18 +544,44 @@ body {
     .official-logo {
         max-width: 180px;
     }
+
+    .share-section,
+    .qr-section {
+        width: 620px;
+    }
 }
 
+/* ==============================
+   RESPONSIVE - SMALL TABLET / LARGE PHONE
+============================== */
 @media (max-width: 650px) {
-    .card {
-        width: 95vw;
-        height: auto;
-        aspect-ratio: 700 / 380;
+    .app-container {
+        padding: 0 15px;
+        margin: 20px auto;
+        gap: 30px;
+    }
+
+    .form-panel {
+        padding: 24px;
+    }
+
+    .form-header h2 {
+        font-size: 20px;
     }
 
     .form-row {
         flex-direction: column;
         gap: 0;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 700 / 380;
+    }
+
+    .card-wrapper {
+        width: 100%;
     }
 
     .person-info h1 {
@@ -993,75 +595,110 @@ body {
     .address-block p {
         font-size: 10px;
     }
+
+    .qr-section,
+    .share-section {
+        width: 100%;
+    }
 }
-/* Mobile-specific adjustments */
+
+/* ==============================
+   RESPONSIVE - MOBILE (STACKED CARD LAYOUT)
+============================== */
 @media (max-width: 480px) {
+    /* Hide SVG background, use solid colors */
+    .card-bg-svg {
+        display: none;
+    }
+
+    .card {
+        height: auto;
+        min-height: 320px;
+        aspect-ratio: unset;
+        border-radius: 12px;
+    }
+
+    /* Stack card vertically: info on top, logo on bottom */
+    .card-content-layer {
+        flex-direction: column;
+    }
+
     .card-left {
-        width: 60%;
-        padding: 20px 16px 16px 20px;
+        width: 100%;
+        padding: 20px 18px 15px;
+        background: #0d7068;
     }
 
     .card-right {
-        width: 40%;
+        width: 100%;
+        height: 120px;
+        padding: 15px;
+        background: white;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
     .official-logo {
-        max-width: 140px;
-        max-height: 180px;
-        object-fit: contain;
-        margin-left: 10px;
+        max-width: 160px;
+        max-height: 100px;
+    }
+
+    /* Person info */
+    .person-info {
+        border-left: none;
+        padding-left: 0;
+        margin-bottom: 12px;
     }
 
     .person-info h1 {
-        font-size: 18px;
-        margin-bottom: 1px;
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 4px;
     }
 
     .person-info h2 {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #e0f2f1;
     }
 
-    .contact-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 8px;
-    }
-
-    .contact-row span {
-        font-size: 11px;
-        line-height: 1.3;
-    }
-
-    .address-block p {
-        font-size: 10px;
-        line-height: 1.3;
-    }
-
-    .share-btn {
-        padding: 10px 20px;
-        font-size: 15px;
-    }
-
-    /* Hide JSON block on mobile to save space */
-    .json-block {
-        display: none;
-    }
-
-    /* Make card more compact */
-    .card {
-        height: auto;
-        min-height: 300px;
-    }
-
-    /* Adjust contact details spacing */
+    /* Contact details */
     .contact-details {
         gap: 10px;
     }
 
-    /* Make form more compact on mobile */
+    .contact-row {
+        gap: 10px;
+    }
+
+    .contact-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+    }
+
+    .contact-row span {
+        font-size: 13px;
+        color: white;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    .address-block p {
+        font-size: 12px;
+        color: #e0f2f1;
+        line-height: 1.4;
+        margin-bottom: 6px;
+    }
+
+    /* Hide JSON block on mobile */
+    .json-block {
+        display: none;
+    }
+
+    /* Compact form */
     .form-panel {
         padding: 20px;
     }
@@ -1072,26 +709,139 @@ body {
 
     .form-group input,
     .form-group textarea {
-        padding: 9px 12px;
-        font-size: 13px;
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* Touch-friendly share button */
+    .share-btn {
+        padding: 14px 20px;
+        font-size: 15px;
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+    }
+
+    .qr-section,
+    .share-section {
+        width: 100%;
+    }
+
+    .card-wrapper {
+        width: 100%;
     }
 }
 
-/* Extra small devices */
+/* ==============================
+   RESPONSIVE - EXTRA SMALL PHONES
+============================== */
 @media (max-width: 360px) {
+    .card {
+        min-height: 300px;
+    }
+
     .card-left {
-        width: 65%;
-        padding: 16px 12px 12px 16px;
+        padding: 18px 16px 12px;
     }
 
     .card-right {
-        width: 35%;
+        height: 100px;
     }
 
     .official-logo {
-        max-width: 120px;
-        max-height: 160px;
-        margin-left: 8px;
+        max-width: 140px;
+        max-height: 80px;
+    }
+
+    .person-info h1 {
+        font-size: 18px;
+    }
+
+    .contact-row span {
+        font-size: 12px;
+    }
+
+    .address-block p {
+        font-size: 11px;
+    }
+
+    .preview-panel {
+        padding: 0 8px;
+    }
+}
+
+/* ==============================
+   RESPONSIVE - LANDSCAPE MOBILE
+============================== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .card-bg-svg {
+        display: none;
+    }
+
+    .card-content-layer {
+        flex-direction: column;
+    }
+
+    .card-left {
+        width: 100%;
+        padding: 18px 16px 12px;
+        background: #0d7068;
+    }
+
+    .card-right {
+        width: 100%;
+        height: 100px;
+        background: white;
+    }
+
+    .official-logo {
+        max-width: 160px;
+        max-height: 90px;
+    }
+
+    .person-info h1 {
+        font-size: 18px;
+    }
+
+    .contact-row span {
+        font-size: 13px;
+    }
+
+    .address-block p {
+        font-size: 12px;
+    }
+
+    .json-block {
+        display: none;
+    }
+
+    .card {
+        width: 90vw;
+        min-height: 280px;
+    }
+
+    .form-panel {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 667px) and (orientation: landscape) {
+    .card {
+        width: 95vw;
+        min-height: 260px;
+    }
+
+    .card-left {
+        padding: 16px 14px 10px;
+    }
+
+    .card-right {
+        height: 80px;
+    }
+
+    .official-logo {
+        max-width: 140px;
+        max-height: 70px;
     }
 
     .person-info h1 {
@@ -1099,20 +849,6 @@ body {
     }
 
     .contact-row span {
-        font-size: 10px;
-    }
-
-    .address-block p {
-        font-size: 9px;
-    }
-
-    /* Make card even more compact */
-    .card {
-        min-height: 280px;
-    }
-
-    /* Adjust preview panel */
-    .preview-panel {
-        padding: 0 10px;
+        font-size: 12px;
     }
 }
