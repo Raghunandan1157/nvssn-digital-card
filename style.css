@@ -594,22 +594,15 @@ body {
         gap: 0;
     }
 
-    .card {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 700 / 380;
-    }
-
-    .card-content-layer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-
     .card-wrapper {
         width: 100%;
+        overflow: hidden;
+    }
+
+    .card {
+        width: 700px;
+        height: 380px;
+        transform-origin: top left;
     }
 
     .qr-section,
