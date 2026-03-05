@@ -145,8 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     console.log('Share successful');
                 } catch (error) {
-                    console.error('Web Share API error:', error);
-                    // If user cancels or error occurs, show copy option with both links
                     if (error.name !== 'AbortError') {
                         showCopyOption(shareUrl, vCardData);
                     }
