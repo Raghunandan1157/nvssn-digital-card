@@ -4,8 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputs = {
         name: document.getElementById('name'),
         designation: document.getElementById('designation'),
+        company: document.getElementById('company'),
         phone: document.getElementById('phone'),
+        cell: document.getElementById('cell'),
         email: document.getElementById('email'),
+        website: document.getElementById('website'),
         location: document.getElementById('location')
     };
 
@@ -13,8 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const preview = {
         name: document.getElementById('preview-name'),
         designation: document.getElementById('preview-designation'),
+        company: document.getElementById('preview-company'),
         phone: document.getElementById('preview-phone'),
+        cell: document.getElementById('preview-cell'),
         email: document.getElementById('preview-email'),
+        website: document.getElementById('preview-website'),
         location: document.getElementById('preview-location')
     };
 
@@ -26,78 +32,79 @@ document.addEventListener('DOMContentLoaded', () => {
         text: ' ',
         width: 180,
         height: 180,
-        colorDark: '#0d7068',
+        colorDark: '#1a5fbf',
         colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.M
     });
 
-    /**
-     * Escapes HTML special characters and converts newlines to <br> tags
-     */
-    function formatMultiline(text) {
+    function escapeHtml(text) {
         return text
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/\n/g, '<br>');
+            .replace(/>/g, '&gt;');
+    }
+
+    function normalizeWebsite(url) {
+        if (!url) return '';
+        if (/^https?:\/\//i.test(url)) return url;
+        return 'https://' + url.replace(/^\/+/, '');
     }
 
     /**
      * Generates a vCard string from the current form data
      */
     function generateVCard(data) {
-        // Clean phone number (remove spaces and dashes for tel: format)
-        const cleanPhone = data.phone.replace(/[\s\-]/g, '');
+        const cleanPhone = (data.phone || '').replace(/[\s\-]/g, '');
+        const cleanCell = (data.cell || '').replace(/[\s\-]/g, '');
 
-        // Split name for vCard N field (last;first)
         const nameParts = data.name.split(' ');
         const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
         const firstName = nameParts.slice(0, -1).join(' ') || data.name;
 
-        return [
+        const lines = [
             'BEGIN:VCARD',
             'VERSION:3.0',
             `FN:${data.name}`,
             `N:${lastName};${firstName};;;`,
             `TITLE:${data.designation}`,
-            `ORG:Navachetana Livelihoods Private Limited`,
-            `TEL;TYPE=CELL:${cleanPhone}`,
-            `EMAIL:${data.email}`,
-            `URL:https://navachetanalivelihoods.com`,
-            `ADR;TYPE=WORK:;;${data.location.replace(/\n/g, ', ')};;;;`,
-            'END:VCARD'
-        ].join('\n');
+            `ORG:${data.company}`
+        ];
+
+        if (cleanPhone) lines.push(`TEL;TYPE=WORK,VOICE:${cleanPhone}`);
+        if (cleanCell) lines.push(`TEL;TYPE=CELL:${cleanCell}`);
+        if (data.email) lines.push(`EMAIL:${data.email}`);
+        if (data.website) lines.push(`URL:${normalizeWebsite(data.website)}`);
+        if (data.location) lines.push(`ADR;TYPE=WORK:;;${data.location.replace(/\n/g, ', ')};;;;`);
+
+        lines.push('END:VCARD');
+        return lines.join('\n');
     }
 
-    // Debounce timer for QR code updates
     let qrTimer = null;
 
-    /**
-     * Core update function: reads form → builds JSON → updates card preview + QR
-     */
     function updateCard() {
-        // 1. Gather all values into a JSON-ready object
         const cardData = {
             name: inputs.name.value.trim(),
             designation: inputs.designation.value.trim(),
+            company: inputs.company.value.trim(),
             phone: inputs.phone.value.trim(),
+            cell: inputs.cell.value.trim(),
             email: inputs.email.value.trim(),
-            location: inputs.location.value.trim(),
-            company: 'Navachetana Livelihoods Private Limited',
-            website: 'https://navachetanalivelihoods.com'
+            website: inputs.website.value.trim(),
+            location: inputs.location.value.trim()
         };
 
-        // 2. Output the JSON to the code block
         jsonOutput.textContent = JSON.stringify(cardData, null, 2);
 
-        // 3. Update the live card preview
         preview.name.textContent = cardData.name || 'Your Name';
         preview.designation.textContent = cardData.designation || 'Designation';
-        preview.phone.textContent = cardData.phone || '+00 - 0000000000';
+        preview.company.textContent = cardData.company || 'Company Name';
+        preview.phone.textContent = cardData.phone || '—';
+        preview.cell.textContent = cardData.cell || '—';
         preview.email.textContent = cardData.email || 'email@example.com';
-        preview.location.innerHTML = formatMultiline(cardData.location) || 'Office Address';
+        preview.website.textContent = cardData.website || 'www.example.com';
+        preview.location.textContent = cardData.location.replace(/\n/g, ', ') || 'Head Office Address';
 
-        // 4. Regenerate QR code (debounced so it doesn't flash on every keystroke)
         clearTimeout(qrTimer);
         qrTimer = setTimeout(() => {
             const vCardString = generateVCard(cardData);
@@ -106,36 +113,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    // Attach live event listeners on every form input
     Object.values(inputs).forEach(el => {
+        if (!el) return;
         el.addEventListener('input', updateCard);
         el.addEventListener('change', updateCard);
     });
 
-    // Initial render
     updateCard();
 
-    // Share button functionality
+    // Share button
     const shareButton = document.getElementById('share-button');
     if (shareButton) {
         shareButton.addEventListener('click', async () => {
-            // Get current card data
             const cardData = {
                 name: inputs.name.value.trim(),
                 designation: inputs.designation.value.trim(),
+                company: inputs.company.value.trim(),
                 phone: inputs.phone.value.trim(),
+                cell: inputs.cell.value.trim(),
                 email: inputs.email.value.trim(),
+                website: inputs.website.value.trim(),
                 location: inputs.location.value.trim()
             };
 
-            // Create shareable URL with encoded data
             const shareData = btoa(JSON.stringify(cardData));
             const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encodeURIComponent(shareData)}`;
-
-            // Generate vCard data for both QR code and contact saving
             const vCardData = generateVCard(cardData);
 
-            // Try Web Share API first (works on iOS 12.2+ and Android)
             if (navigator.share) {
                 try {
                     await navigator.share({
@@ -143,35 +147,37 @@ document.addEventListener('DOMContentLoaded', () => {
                         text: `Check out ${cardData.name}'s digital business card:\n${shareUrl}`,
                         url: shareUrl
                     });
-                    console.log('Share successful');
                 } catch (error) {
                     if (error.name !== 'AbortError') {
                         showCopyOption(shareUrl, vCardData);
                     }
                 }
             } else {
-                // Fallback for browsers without Web Share API - show both links
                 showCopyOption(shareUrl, vCardData);
             }
         });
     }
 
-    // Copy links button functionality
+    // Copy links button
     const copyButton = document.getElementById('copy-button');
     if (copyButton) {
         copyButton.addEventListener('click', () => {
             const cardData = {
                 name: inputs.name.value.trim(),
                 designation: inputs.designation.value.trim(),
+                company: inputs.company.value.trim(),
                 phone: inputs.phone.value.trim(),
+                cell: inputs.cell.value.trim(),
                 email: inputs.email.value.trim(),
+                website: inputs.website.value.trim(),
                 location: inputs.location.value.trim()
             };
 
             const shareData = btoa(JSON.stringify(cardData));
             const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encodeURIComponent(shareData)}`;
+            const websiteUrl = normalizeWebsite(cardData.website);
 
-            const copyText = `${cardData.name} | ${cardData.designation}\n\nSave Contact: ${shareUrl}\nOpen Website: https://navachetanalivelihoods.com`;
+            const copyText = `${cardData.name} | ${cardData.designation}\n${cardData.company}\n\nSave Contact: ${shareUrl}\nOpen Website: ${websiteUrl}`;
 
             navigator.clipboard.writeText(copyText)
                 .then(() => {
@@ -181,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 2000);
                 })
                 .catch(() => {
-                    // Fallback
                     const ta = document.createElement('textarea');
                     ta.value = copyText;
                     document.body.appendChild(ta);
@@ -196,14 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Show share options with two links
     function showCopyOption(shareUrl, vCardData) {
         const vCardBlob = new Blob([vCardData], { type: 'text/vcard' });
         const vCardUrl = URL.createObjectURL(vCardBlob);
         const cardName = inputs.name.value.trim();
         const cardDesignation = inputs.designation.value.trim();
+        const websiteUrl = normalizeWebsite(inputs.website.value.trim());
 
-        // Create overlay with proper CSS classes
         const overlay = document.createElement('div');
         overlay.className = 'share-overlay';
 
@@ -211,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
         dialog.className = 'share-dialog';
         dialog.innerHTML = `
             <div class="share-person">
-                <h3 class="share-person-name">${cardName}</h3>
-                <p class="share-person-designation">${cardDesignation}</p>
+                <h3 class="share-person-name">${escapeHtml(cardName)}</h3>
+                <p class="share-person-designation">${escapeHtml(cardDesignation)}</p>
             </div>
 
             <div class="share-links">
@@ -220,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="share-link-label"><i class="fa-solid fa-address-book"></i> Save Contact</span>
                     <span class="share-link-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                 </a>
-                <a href="${shareUrl}" target="_blank" class="share-link-row">
+                <a href="${websiteUrl}" target="_blank" rel="noopener" class="share-link-row">
                     <span class="share-link-label"><i class="fa-solid fa-globe"></i> Open Website</span>
                     <span class="share-link-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                 </a>
@@ -243,7 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Check URL for shared data on page load
     function loadSharedData() {
         const urlParams = new URLSearchParams(window.location.search);
         const sharedData = urlParams.get('data');
@@ -251,24 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sharedData) {
             try {
                 const decodedData = JSON.parse(atob(decodeURIComponent(sharedData)));
-                
-                // Populate form fields
+
                 if (decodedData.name) inputs.name.value = decodedData.name;
                 if (decodedData.designation) inputs.designation.value = decodedData.designation;
+                if (decodedData.company) inputs.company.value = decodedData.company;
                 if (decodedData.phone) inputs.phone.value = decodedData.phone;
+                if (decodedData.cell) inputs.cell.value = decodedData.cell;
                 if (decodedData.email) inputs.email.value = decodedData.email;
+                if (decodedData.website) inputs.website.value = decodedData.website;
                 if (decodedData.location) inputs.location.value = decodedData.location;
 
-                // Update card preview
                 updateCard();
-                
-                console.log('Loaded shared card data');
             } catch (error) {
                 console.error('Error loading shared data:', error);
             }
         }
     }
 
-    // Load shared data when page loads
     loadSharedData();
 });

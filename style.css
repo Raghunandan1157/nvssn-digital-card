@@ -11,7 +11,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #e8f5e9 0%, #e0f2f1 50%, #f1f8e9 100%);
+    background: linear-gradient(135deg, #e8f0fb 0%, #e0f2f1 50%, #f1f8e9 100%);
     min-height: 100vh;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -43,7 +43,7 @@ body {
 }
 
 .form-header h2 {
-    color: #0d7068;
+    color: #1a5fbf;
     font-size: 22px;
     font-weight: 700;
     display: flex;
@@ -80,7 +80,7 @@ body {
 }
 
 .form-group label i {
-    color: #0d7068;
+    color: #1a5fbf;
     margin-right: 5px;
     font-size: 12px;
 }
@@ -101,8 +101,8 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #8CC63F;
-    box-shadow: 0 0 0 3px rgba(140, 198, 63, 0.15);
+    border-color: #1a5fbf;
+    box-shadow: 0 0 0 3px rgba(26, 95, 191, 0.15);
     background: #fff;
 }
 
@@ -132,12 +132,12 @@ body {
 
 .json-header i {
     margin-right: 6px;
-    color: #8CC63F;
+    color: #1a5fbf;
 }
 
 .live-badge {
     font-size: 11px;
-    color: #8CC63F;
+    color: #1a9e8e;
     font-weight: 700;
     letter-spacing: 0.5px;
     animation: livePulse 1.5s infinite;
@@ -172,6 +172,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .preview-title {
@@ -182,136 +183,204 @@ body {
     letter-spacing: 0.5px;
 }
 
+/* ==============================
+   CARD WRAPPER — uniform scaling
+   Card internals stay at exact 700x380 layout.
+   Wrapper uses container queries to compute
+   scale factor; transform shrinks card as one unit.
+============================== */
 .card-wrapper {
+    container-type: inline-size;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 700 / 380;
+    position: relative;
     filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.18));
 }
 
-/* ==============================
-   THE BUSINESS CARD (LANDSCAPE)
-============================== */
 .card {
     width: 700px;
     height: 380px;
-    border-radius: 10px;
-    position: relative;
+    border-radius: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
     overflow: hidden;
-    background: #fff;
+    background: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    transform-origin: top left;
+    transform: scale(calc(100cqw / 700));
 }
 
-/* Full background SVG layer */
-.card-bg-svg {
+/* Fallback for browsers without container-query unit support */
+@supports not (width: 1cqw) {
+    .card-wrapper {
+        width: 700px;
+        max-width: 100%;
+        height: 380px;
+        aspect-ratio: auto;
+    }
+    .card {
+        transform: none;
+        position: relative;
+    }
+}
+
+/* Top accent bar */
+.card-top-accent {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    height: 8px;
+    background: linear-gradient(90deg, #e85a4a 0%, #e85a4a 55%, #f0a04a 75%, #f0c94a 100%);
+    z-index: 3;
 }
 
-/* Content overlay */
+/* Left vertical stripes */
+.card-left-stripes {
+    position: absolute;
+    top: 14px;
+    bottom: 14px;
+    left: 18px;
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+}
+
+.stripe {
+    display: block;
+    width: 5px;
+    height: 100%;
+    border-radius: 2px;
+}
+
+.stripe-blue {
+    background: #2a7bd9;
+}
+
+.stripe-teal {
+    background: #1a9e8e;
+}
+
+/* Content layer */
 .card-content-layer {
     position: relative;
     z-index: 2;
-    display: flex;
-    flex-wrap: nowrap;
     width: 100%;
     height: 100%;
-}
-
-/* ----- LEFT SIDE (Teal area with info) ----- */
-.card-left {
-    width: 55%;
-    padding: 32px 30px 25px 35px;
+    padding: 26px 36px 28px 52px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    color: #fff;
 }
 
-.person-info {
-    border-left: 3px solid #8CC63F;
-    padding-left: 14px;
-}
-
-.person-info h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: #8CC63F;
-    margin-bottom: 2px;
-    letter-spacing: 0.5px;
-}
-
-.person-info h2 {
-    font-size: 14px;
-    font-weight: 400;
-    color: #d0f0e0;
-    letter-spacing: 0.3px;
-}
-
-/* Contact details */
-.contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.contact-row {
+/* ----- TOP ROW: logo + name ----- */
+.card-top-row {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.contact-icon {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    background: #8CC63F;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: #fff;
-    margin-top: 2px;
+.card-logo-area {
+    flex: 0 0 220px;
 }
 
-.contact-row span {
-    font-size: 13px;
-    color: #f0f0f0;
-    line-height: 1.5;
-    letter-spacing: 0.2px;
-    font-weight: 500;
-}
-
-.address-block p {
-    font-size: 11.5px;
-    color: #e8e8e8;
-    line-height: 1.55;
-    margin-bottom: 8px;
-    font-weight: 400;
-}
-
-.address-block p:last-child {
-    margin-bottom: 0;
-}
-
-/* ----- RIGHT SIDE (White area with logo) ----- */
-.card-right {
-    width: 45%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-}
-
-.official-logo {
-    max-width: 200px;
-    max-height: 240px;
-    object-fit: contain;
-    margin: 0 auto;
+.brand-logo {
+    width: 220px;
+    height: auto;
     display: block;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.card-name-area {
+    flex: 1;
+    text-align: left;
+    padding-top: 22px;
+    padding-left: 10px;
+}
+
+.card-name-area h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a5fbf;
+    letter-spacing: 0.3px;
+    text-decoration: underline;
+    text-decoration-color: #e85a4a;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+    margin-bottom: 4px;
+}
+
+.card-name-area h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.2px;
+}
+
+/* ----- COMPANY TITLE ----- */
+.card-company {
+    margin-top: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1.5px solid #e85a4a;
+}
+
+.card-company h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #1a5fbf;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+}
+
+/* ----- CONTACT DETAILS ----- */
+.card-contact {
+    margin-top: 12px;
+    flex: 1;
+}
+
+.contact-line {
+    display: flex;
+    align-items: baseline;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1.7;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.contact-label {
+    flex: 0 0 78px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.contact-sep {
+    flex: 0 0 auto;
+    margin-right: 6px;
+}
+
+.contact-inline {
+    margin-left: 18px;
+    color: #1a1a1a;
+}
+
+/* Bottom blue underline */
+.card-bottom-line {
+    position: absolute;
+    left: 52px;
+    right: 36px;
+    bottom: 18px;
+    height: 2px;
+    background: #2a7bd9;
+    z-index: 2;
 }
 
 /* ==============================
@@ -319,7 +388,8 @@ body {
 ============================== */
 .qr-section {
     margin-top: 30px;
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -332,7 +402,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 12px 20px;
-    background: #0d7068;
+    background: #1a5fbf;
     color: #fff;
     font-size: 14px;
     font-weight: 500;
@@ -340,11 +410,12 @@ body {
 
 .qr-header i {
     font-size: 16px;
-    color: #8CC63F;
+    color: #ffd94a;
 }
 
 .qr-header .live-badge {
     margin-left: auto;
+    color: #ffd94a;
 }
 
 .qr-body {
@@ -372,19 +443,18 @@ body {
     font-size: 12px;
     color: #999;
     letter-spacing: 0.2px;
+    text-align: center;
 }
 
 /* ==============================
-   SHARE BUTTON
+   SHARE BUTTONS
 ============================== */
 .share-section {
     margin-top: 20px;
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     display: flex;
     justify-content: center;
-}
-
-.share-section {
     gap: 12px;
 }
 
@@ -405,7 +475,7 @@ body {
 }
 
 .share-btn {
-    background: linear-gradient(135deg, #0d7068 0%, #5a9e1e 100%);
+    background: linear-gradient(135deg, #1a5fbf 0%, #1a9e8e 100%);
 }
 
 .copy-btn {
@@ -454,29 +524,27 @@ body {
     overflow: hidden;
 }
 
-/* Person header */
 .share-person {
-    background: linear-gradient(135deg, #0d7068 0%, #0a5c55 100%);
+    background: linear-gradient(135deg, #1a5fbf 0%, #0e3e82 100%);
     padding: 24px 24px 20px;
     text-align: center;
 }
 
 .share-person-name {
-    color: #8CC63F;
-    font-family: 'Playfair Display', serif;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 4px;
 }
 
 .share-person-designation {
-    color: #d0f0e0;
+    color: #cfe0f8;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.3px;
 }
 
-/* Link rows */
 .share-links {
     padding: 16px;
 }
@@ -512,7 +580,7 @@ body {
 }
 
 .share-link-label i {
-    color: #0d7068;
+    color: #1a5fbf;
     margin-right: 10px;
     font-size: 16px;
     width: 20px;
@@ -524,7 +592,6 @@ body {
     font-size: 13px;
 }
 
-/* Close button */
 .share-close-btn {
     display: block;
     width: calc(100% - 32px);
@@ -545,7 +612,9 @@ body {
 }
 
 /* ==============================
-   RESPONSIVE - TABLET
+   RESPONSIVE LAYOUT (form panel only)
+   Card itself scales via container query above —
+   no card-internal breakpoints needed.
 ============================== */
 @media (max-width: 1050px) {
     .app-container {
@@ -557,21 +626,8 @@ body {
         max-width: 700px;
         width: 100%;
     }
-
-    .card {
-        width: 620px;
-        height: 340px;
-    }
-
-    .share-section,
-    .qr-section {
-        width: 620px;
-    }
 }
 
-/* ==============================
-   RESPONSIVE - SMALL TABLET / LARGE PHONE
-============================== */
 @media (max-width: 650px) {
     .app-container {
         padding: 0 15px;
@@ -591,95 +647,13 @@ body {
         flex-direction: column;
         gap: 0;
     }
-
-    .card-wrapper {
-        width: 100%;
-    }
-
-    .card {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 700 / 380;
-    }
-
-    .card-bg-svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .card-content-layer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .card-left {
-        padding: 4.5% 4% 3.5% 5%;
-    }
-
-    .person-info h1 {
-        font-size: clamp(12px, 3.7vw, 26px);
-    }
-
-    .person-info h2 {
-        font-size: clamp(8px, 2vw, 14px);
-    }
-
-    .contact-details {
-        gap: clamp(4px, 1.5vw, 12px);
-    }
-
-    .contact-icon {
-        width: clamp(14px, 3.4vw, 24px);
-        height: clamp(14px, 3.4vw, 24px);
-        min-width: clamp(14px, 3.4vw, 24px);
-        font-size: clamp(6px, 1.4vw, 10px);
-    }
-
-    .contact-row {
-        gap: clamp(5px, 1.5vw, 12px);
-    }
-
-    .contact-row span {
-        font-size: clamp(7px, 1.85vw, 13px);
-    }
-
-    .address-block p {
-        font-size: clamp(6px, 1.6vw, 11.5px);
-        margin-bottom: clamp(2px, 0.8vw, 8px);
-    }
-
-    .person-info {
-        border-left-width: clamp(2px, 0.4vw, 3px);
-        padding-left: clamp(6px, 2vw, 14px);
-    }
-
-    .official-logo {
-        max-width: clamp(80px, 25vw, 200px);
-        max-height: clamp(100px, 30vw, 240px);
-    }
-
-    .qr-section,
-    .share-section {
-        width: 100%;
-    }
 }
 
-/* ==============================
-   RESPONSIVE - MOBILE (SAME CARD, JUST SCALED)
-============================== */
 @media (max-width: 480px) {
-    /* Hide JSON block on mobile */
     .json-block {
         display: none;
     }
 
-    /* Compact form */
     .form-panel {
         padding: 20px;
     }
@@ -694,7 +668,6 @@ body {
         font-size: 14px;
     }
 
-    /* Touch-friendly buttons */
     .share-section {
         flex-direction: column;
     }
@@ -707,29 +680,14 @@ body {
         justify-content: center;
         min-height: 48px;
     }
-
-    .qr-section,
-    .share-section {
-        width: 100%;
-    }
-
-    .card-wrapper {
-        width: 100%;
-    }
 }
 
-/* ==============================
-   RESPONSIVE - EXTRA SMALL PHONES
-============================== */
 @media (max-width: 360px) {
     .preview-panel {
         padding: 0 8px;
     }
 }
 
-/* ==============================
-   RESPONSIVE - LANDSCAPE MOBILE
-============================== */
 @media (max-width: 768px) and (orientation: landscape) {
     .json-block {
         display: none;

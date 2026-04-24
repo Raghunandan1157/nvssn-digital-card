@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Business Card Generator</title>
-    <link rel="icon" type="image/jpeg" href="Official Logo.jpg">
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link
@@ -30,30 +30,44 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name"><i class="fa-solid fa-user"></i> Full Name</label>
-                        <input type="text" id="name" value="Suresh B.K." placeholder="Enter full name">
+                        <input type="text" id="name" value="C.S. Manegar" placeholder="Enter full name">
                     </div>
                     <div class="form-group">
                         <label for="designation"><i class="fa-solid fa-briefcase"></i> Designation</label>
-                        <input type="text" id="designation" value="CEO" placeholder="Enter designation">
+                        <input type="text" id="designation" value="Chief Executive Officer" placeholder="Enter designation">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="company"><i class="fa-solid fa-building"></i> Company Name</label>
+                    <input type="text" id="company" value="Navachetana Vividoddesh Souharda Sahakari Niyamit" placeholder="Enter company name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone"><i class="fa-solid fa-phone"></i> Phone</label>
+                        <input type="text" id="phone" value="08375-233527" placeholder="Office phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="cell"><i class="fa-solid fa-mobile-screen"></i> Cell</label>
+                        <input type="text" id="cell" value="9480696162" placeholder="Cell number">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="phone"><i class="fa-solid fa-phone"></i> Phone Number</label>
-                        <input type="text" id="phone" value="+91 - 9986015737" placeholder="Enter phone number">
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
+                        <input type="email" id="email" value="csmanegar@gmail.com" placeholder="Enter email">
                     </div>
                     <div class="form-group">
-                        <label for="email"><i class="fa-solid fa-envelope"></i> Email ID</label>
-                        <input type="email" id="email" value="suresh.bk@navachetanagroup.com" placeholder="Enter email">
+                        <label for="website"><i class="fa-solid fa-globe"></i> Website</label>
+                        <input type="text" id="website" value="www.navachetanasouhardha.com" placeholder="Enter website">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="location"><i class="fa-solid fa-location-dot"></i> Location</label>
-                    <textarea id="location" rows="3" placeholder="Enter office address">No.201, 2nd Floor,
-60 Feet Road, Shankar Nagar Main Road,
-Nandini Layout, Bengaluru - 560 096</textarea>
+                    <label for="location"><i class="fa-solid fa-location-dot"></i> Head Office</label>
+                    <textarea id="location" rows="2" placeholder="Enter head office address">"Hitaishi", Shirur Building, P.B. Road, HAVERI-581 110.</textarea>
                 </div>
             </form>
 
@@ -73,54 +87,62 @@ Nandini Layout, Bengaluru - 560 096</textarea>
             <div class="card-wrapper">
                 <div class="card" id="business-card">
 
-                    <!-- Background SVG for the teal + green swoosh + white area -->
-                    <svg class="card-bg-svg" viewBox="0 0 700 380" preserveAspectRatio="none">
-                        <!-- Teal left background -->
-                        <rect width="700" height="380" fill="#0d7068" />
+                    <!-- Top accent bar -->
+                    <div class="card-top-accent"></div>
 
-                        <!-- Dark green swoosh transition -->
-                        <path d="M320,0 C360,80 300,200 340,380 L700,380 L700,0 Z" fill="#5a9e1e" opacity="0.7" />
+                    <!-- Left vertical stripes -->
+                    <div class="card-left-stripes">
+                        <span class="stripe stripe-blue"></span>
+                        <span class="stripe stripe-teal"></span>
+                    </div>
 
-                        <!-- Bright lime green swoosh -->
-                        <path d="M350,0 C400,100 330,240 380,380 L700,380 L700,0 Z" fill="#8CC63F" />
-
-                        <!-- White right area -->
-                        <path d="M390,0 C440,110 370,260 420,380 L700,380 L700,0 Z" fill="#ffffff" />
-                    </svg>
-
-                    <!-- Card Content Layer -->
+                    <!-- Card Content -->
                     <div class="card-content-layer">
 
-                        <!-- LEFT INFO -->
-                        <div class="card-left">
-                            <div class="person-info">
-                                <h1 id="preview-name">Suresh B.K.</h1>
-                                <h2 id="preview-designation">CEO</h2>
+                        <!-- TOP ROW: Logo + Name/Title -->
+                        <div class="card-top-row">
+                            <div class="card-logo-area">
+                                <img src="logo.png" alt="Nava Chetana Souharda Sahakari" class="brand-logo">
                             </div>
 
-                            <div class="contact-details">
-                                <div class="contact-row">
-                                    <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-                                    <span id="preview-phone">+91 - 9986015737</span>
-                                </div>
-                                <div class="contact-row">
-                                    <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
-                                    <span id="preview-email">suresh.bk@navachetanagroup.com</span>
-                                </div>
-                                <div class="contact-row address-row">
-                                    <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-                                    <div class="address-block">
-                                        <p id="preview-location">No.201, 2nd Floor,<br>60 Feet Road,
-                                            Shankar Nagar Main Road,<br>Nandini Layout, Bengaluru - 560 096</p>
-                                    </div>
-                                </div>
+                            <div class="card-name-area">
+                                <h1 id="preview-name">C.S. Manegar</h1>
+                                <h2 id="preview-designation">Chief Executive Officer</h2>
                             </div>
                         </div>
 
-                        <!-- RIGHT LOGO -->
-                        <div class="card-right">
-                            <img src="Official Logo.jpg" alt="Navachetana Livelihoods Logo" class="official-logo">
+                        <!-- COMPANY TITLE -->
+                        <div class="card-company">
+                            <h3 id="preview-company">Navachetana Vividoddesh Souharda Sahakari Niyamit</h3>
                         </div>
+
+                        <!-- CONTACT DETAILS -->
+                        <div class="card-contact">
+                            <p class="contact-line">
+                                <span class="contact-label">Head Office</span>
+                                <span class="contact-sep">:</span>
+                                <span id="preview-location">"Hitaishi", Shirur Building, P.B. Road, HAVERI-581 110.</span>
+                            </p>
+                            <p class="contact-line">
+                                <span class="contact-label">Phone</span>
+                                <span class="contact-sep">:</span>
+                                <span id="preview-phone">08375-233527</span>
+                                <span class="contact-inline">Cell : <span id="preview-cell">9480696162</span></span>
+                            </p>
+                            <p class="contact-line">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-sep">:</span>
+                                <span id="preview-email">csmanegar@gmail.com</span>
+                            </p>
+                            <p class="contact-line">
+                                <span class="contact-label">Website</span>
+                                <span class="contact-sep">:</span>
+                                <span id="preview-website">www.navachetanasouhardha.com</span>
+                            </p>
+                        </div>
+
+                        <!-- Bottom blue underline -->
+                        <div class="card-bottom-line"></div>
 
                     </div>
                 </div>
