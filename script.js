@@ -1,31 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Form input elements
     const inputs = {
         name: document.getElementById('name'),
         designation: document.getElementById('designation'),
         company: document.getElementById('company'),
         phone: document.getElementById('phone'),
-        email: document.getElementById('email'),
         website: document.getElementById('website'),
         location: document.getElementById('location')
     };
 
-    // Preview elements on the card
     const preview = {
         name: document.getElementById('preview-name'),
         designation: document.getElementById('preview-designation'),
         company: document.getElementById('preview-company'),
         phone: document.getElementById('preview-phone'),
-        email: document.getElementById('preview-email'),
         website: document.getElementById('preview-website'),
-        location: document.getElementById('preview-location')
+        location: document.getElementById('preview-location'),
+        locationLabel: document.getElementById('preview-location-label')
     };
+
+    let currentLocationLabel = 'Head Office';
 
     const jsonOutput = document.getElementById('json-output');
     const qrContainer = document.getElementById('qr-code');
 
-    // Initialize QR code instance
     let qrCode = new QRCode(qrContainer, {
         text: ' ',
         width: 180,
@@ -48,9 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'https://' + url.replace(/^\/+/, '');
     }
 
-    /**
-     * Generates a vCard string from the current form data
-     */
     function generateVCard(data) {
         const cleanPhone = (data.phone || '').replace(/[\s\-]/g, '');
 
@@ -68,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         if (cleanPhone) lines.push(`TEL;TYPE=CELL:${cleanPhone}`);
-        if (data.email) lines.push(`EMAIL:${data.email}`);
         if (data.website) lines.push(`URL:${normalizeWebsite(data.website)}`);
         if (data.location) lines.push(`ADR;TYPE=WORK:;;${data.location.replace(/\n/g, ', ')};;;;`);
 
@@ -78,16 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let qrTimer = null;
 
-    function updateCard() {
-        const cardData = {
+    function getCardData() {
+        return {
             name: inputs.name.value.trim(),
             designation: inputs.designation.value.trim(),
             company: inputs.company.value.trim(),
             phone: inputs.phone.value.trim(),
-            email: inputs.email.value.trim(),
             website: inputs.website.value.trim(),
-            location: inputs.location.value.trim()
+            location: inputs.location.value.trim(),
+            locationLabel: currentLocationLabel
         };
+    }
+
+    function updateCard() {
+        const cardData = getCardData();
 
         jsonOutput.textContent = JSON.stringify(cardData, null, 2);
 
@@ -95,9 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
         preview.designation.textContent = cardData.designation || 'Designation';
         preview.company.textContent = cardData.company || 'Company Name';
         preview.phone.textContent = cardData.phone || '—';
-        preview.email.textContent = cardData.email || 'email@example.com';
         preview.website.textContent = cardData.website || 'www.example.com';
-        preview.location.textContent = cardData.location.replace(/\n/g, ', ') || 'Head Office Address';
+        preview.location.textContent = cardData.location.replace(/\n/g, ', ') || 'Office Address';
+        if (preview.locationLabel) preview.locationLabel.textContent = currentLocationLabel;
 
         clearTimeout(qrTimer);
         qrTimer = setTimeout(() => {
@@ -119,17 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shareButton = document.getElementById('share-button');
     if (shareButton) {
         shareButton.addEventListener('click', async () => {
-            const cardData = {
-                name: inputs.name.value.trim(),
-                designation: inputs.designation.value.trim(),
-                company: inputs.company.value.trim(),
-                phone: inputs.phone.value.trim(),
-
-                email: inputs.email.value.trim(),
-                website: inputs.website.value.trim(),
-                location: inputs.location.value.trim()
-            };
-
+            const cardData = getCardData();
             const shareData = btoa(JSON.stringify(cardData));
             const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encodeURIComponent(shareData)}`;
             const vCardData = generateVCard(cardData);
@@ -152,21 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Copy links button
     const copyButton = document.getElementById('copy-button');
     if (copyButton) {
         copyButton.addEventListener('click', () => {
-            const cardData = {
-                name: inputs.name.value.trim(),
-                designation: inputs.designation.value.trim(),
-                company: inputs.company.value.trim(),
-                phone: inputs.phone.value.trim(),
-
-                email: inputs.email.value.trim(),
-                website: inputs.website.value.trim(),
-                location: inputs.location.value.trim()
-            };
-
+            const cardData = getCardData();
             const shareData = btoa(JSON.stringify(cardData));
             const shareUrl = `${window.location.origin}${window.location.pathname}?data=${encodeURIComponent(shareData)}`;
             const websiteUrl = normalizeWebsite(cardData.website);
@@ -253,9 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (decodedData.designation) inputs.designation.value = decodedData.designation;
                 if (decodedData.company) inputs.company.value = decodedData.company;
                 if (decodedData.phone) inputs.phone.value = decodedData.phone;
-                if (decodedData.email) inputs.email.value = decodedData.email;
                 if (decodedData.website) inputs.website.value = decodedData.website;
                 if (decodedData.location) inputs.location.value = decodedData.location;
+                if (decodedData.locationLabel) currentLocationLabel = decodedData.locationLabel;
 
                 updateCard();
             } catch (error) {
