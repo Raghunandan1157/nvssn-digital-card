@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         designation: document.getElementById('designation'),
         company: document.getElementById('company'),
         phone: document.getElementById('phone'),
-        cell: document.getElementById('cell'),
         email: document.getElementById('email'),
         website: document.getElementById('website'),
         location: document.getElementById('location')
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         designation: document.getElementById('preview-designation'),
         company: document.getElementById('preview-company'),
         phone: document.getElementById('preview-phone'),
-        cell: document.getElementById('preview-cell'),
         email: document.getElementById('preview-email'),
         website: document.getElementById('preview-website'),
         location: document.getElementById('preview-location')
@@ -55,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function generateVCard(data) {
         const cleanPhone = (data.phone || '').replace(/[\s\-]/g, '');
-        const cleanCell = (data.cell || '').replace(/[\s\-]/g, '');
 
         const nameParts = data.name.split(' ');
         const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
@@ -70,8 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `ORG:${data.company}`
         ];
 
-        if (cleanPhone) lines.push(`TEL;TYPE=WORK,VOICE:${cleanPhone}`);
-        if (cleanCell) lines.push(`TEL;TYPE=CELL:${cleanCell}`);
+        if (cleanPhone) lines.push(`TEL;TYPE=CELL:${cleanPhone}`);
         if (data.email) lines.push(`EMAIL:${data.email}`);
         if (data.website) lines.push(`URL:${normalizeWebsite(data.website)}`);
         if (data.location) lines.push(`ADR;TYPE=WORK:;;${data.location.replace(/\n/g, ', ')};;;;`);
@@ -88,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             designation: inputs.designation.value.trim(),
             company: inputs.company.value.trim(),
             phone: inputs.phone.value.trim(),
-            cell: inputs.cell.value.trim(),
             email: inputs.email.value.trim(),
             website: inputs.website.value.trim(),
             location: inputs.location.value.trim()
@@ -100,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         preview.designation.textContent = cardData.designation || 'Designation';
         preview.company.textContent = cardData.company || 'Company Name';
         preview.phone.textContent = cardData.phone || '—';
-        preview.cell.textContent = cardData.cell || '—';
         preview.email.textContent = cardData.email || 'email@example.com';
         preview.website.textContent = cardData.website || 'www.example.com';
         preview.location.textContent = cardData.location.replace(/\n/g, ', ') || 'Head Office Address';
@@ -130,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 designation: inputs.designation.value.trim(),
                 company: inputs.company.value.trim(),
                 phone: inputs.phone.value.trim(),
-                cell: inputs.cell.value.trim(),
+
                 email: inputs.email.value.trim(),
                 website: inputs.website.value.trim(),
                 location: inputs.location.value.trim()
@@ -167,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 designation: inputs.designation.value.trim(),
                 company: inputs.company.value.trim(),
                 phone: inputs.phone.value.trim(),
-                cell: inputs.cell.value.trim(),
+
                 email: inputs.email.value.trim(),
                 website: inputs.website.value.trim(),
                 location: inputs.location.value.trim()
@@ -259,7 +253,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (decodedData.designation) inputs.designation.value = decodedData.designation;
                 if (decodedData.company) inputs.company.value = decodedData.company;
                 if (decodedData.phone) inputs.phone.value = decodedData.phone;
-                if (decodedData.cell) inputs.cell.value = decodedData.cell;
                 if (decodedData.email) inputs.email.value = decodedData.email;
                 if (decodedData.website) inputs.website.value = decodedData.website;
                 if (decodedData.location) inputs.location.value = decodedData.location;
